@@ -2,6 +2,7 @@ import React from "react";
 import { FiPlus } from "react-icons/fi";
 import { Link } from "react-router-dom";
 const ButtonAddAddress = () => {
+  // khi nhấn vào button này sẽ dẫn tới "/add-address"
   return (
     <div className="w-[100%] h-[180px]   border-[2px] border-[#f0f0f0] border-solid flex justify-center items-center">
       <div className="w-[92%] h-[85%]  border-dashed border-[#f0f0f0] border-[2px] flex justify-center items-center">

@@ -1,5 +1,5 @@
 const DOMAIN = "https://test-pos.digibird.io/api/v1";
-
+// Đây là file chứa API server
 const API = {
   GET_ADDRESS:
     DOMAIN +

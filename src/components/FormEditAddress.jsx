@@ -11,10 +11,12 @@ import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import API from "../services/API";
 const FormEditAddress = () => {
-  const { addressId } = useParams();
-  const history = useNavigate();
-  const { register, handleSubmit } = useForm();
-  const onSubmit = (data) => console.log(data);
+  const { addressId } = useParams(); // Lấy giá trị từ URL
+  const history = useNavigate(); // Sử dụng hook để điều hướng
+  const { register, handleSubmit } = useForm(); // Sử dụng useForm hook để quản lý form
+  const onSubmit = (data) => console.log(data); // Hàm xử lý khi form được submit
+
+  // Các state để lưu trữ thông tin địa chỉ và dữ liệu từ API
   const [provide, setProvide] = useState([]);
   const [district, setDistrict] = useState([]);
   const [provide1, setProvide1] = useState("1");
@@ -28,6 +30,7 @@ const FormEditAddress = () => {
   const [city, setCity] = useState("Dong Nai");
   const [state, setState] = useState("ggg");
   const [country, setCountry] = useState("VN");
+  // Hàm xử lý cập nhật địa chỉ
   const handleLUpdate = async () => {
     try {
       const response = await api.put(
@@ -44,7 +47,7 @@ const FormEditAddress = () => {
           country,
         }
       );
-      history("/address");
+      history("/address"); // Điều hướng sau khi cập nhật
     } catch (error) {
       console.error("Add sai!", error);
     }
@@ -84,13 +87,9 @@ const FormEditAddress = () => {
 
     callAPI("https://provinces.open-api.vn/api/?depth=1");
     var callApiDistrict = async (api) => {
-      // return axios.get(api).then((response) => {
-      //   renderData(response.data.districts, "district");
-      // });
       try {
         const getApi1 = await axios.get(api);
         setDistrict(getApi1?.data?.districts);
-        //renderData(response.data, "province");
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -99,6 +98,7 @@ const FormEditAddress = () => {
   }, [provide1]);
 
   useEffect(() => {
+    // Chú thích: cập nhật tên khi dữ liệu thay đổi
     if (dataAddress.name) {
       setName(dataAddress.name);
     }
@@ -109,6 +109,7 @@ const FormEditAddress = () => {
   };
 
   useEffect(() => {
+    // Chú thích: cập nhật tên khi dữ liệu thay đổi
     if (dataAddress.phone) {
       setPhone(dataAddress.phone);
     }
@@ -150,9 +151,6 @@ const FormEditAddress = () => {
     }
   }, [dataAddress.state]);
 
-  const handleInputChangeDis = (e) => {
-    setState(e.target.options[e.target.selectedIndex].text);
-  };
   return (
     <div className=" border-[2px] border-[#f0f0f0] border-solid w-[90%] h-[90%] mt-6 ">
       <div className="h-[20%] w-full  py-2 border-b-[2px] border-[#f0f0f0] border-solid">

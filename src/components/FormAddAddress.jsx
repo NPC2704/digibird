@@ -1,3 +1,4 @@
+// Import các hàm và hook cần thiết từ thư viện React
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { AiOutlineUser, AiOutlinePhone, AiOutlineMail } from "react-icons/ai";
@@ -7,15 +8,15 @@ import { tokenState } from "../recoil/initState";
 import { api, setAuthToken } from "../utils/setAuthToken";
 import API from "../services/API";
 import { useRecoilValue } from "recoil";
-import { useNavigate } from "react-router-dom";
 const FormAddAddress = () => {
+  // Sử dụng useForm hook từ thư viện react-hook-form để quản lý form
   const { register, handleSubmit } = useForm();
   const onSubmit = (data) => console.log(data);
   const [provide, setProvide] = useState([]);
   const [district, setDistrict] = useState([]);
   const [selectedCity, setSelectedCity] = useState("");
   const [provide1, setProvide1] = useState("1");
-  // tạo các useState để truyền vào API ADD ADDRESS
+  // Các state để lưu trữ thông tin địa chỉ và dữ liệu từ API
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState(0);
@@ -25,11 +26,12 @@ const FormAddAddress = () => {
   const [city, setCity] = useState("Dong Nai");
   const [state, setState] = useState("ggg");
   const [country, setCountry] = useState("VN");
-
+  // Vì phone ở API là number nên phải có bước chuyển đổi giá trị thành số nguyên
   const handlePhoneChange = (e) => {
-    const newPhone = parseInt(e.target.value, 10); // Chuyển đổi giá trị thành số nguyên
+    const newPhone = parseInt(e.target.value, 10);
     setPhone(newPhone);
   };
+  // Khi gọi hàm này ở hành động onClick ở phía dưới ở button Thêm địa chỉ , hàm này call API thêm Address
   const handleLAdd = async () => {
     try {
       const response = await api.post(API.POST_ADDRESS, {
@@ -59,14 +61,16 @@ const FormAddAddress = () => {
       try {
         const response = await api.get(API.GET_ADDRESS);
 
-        setDataListAddress(response.data.data);
+        setDataListAddress(response.data.data); // Cập nhật dữ liệu từ API vào state
       } catch (error) {
         console.error("Error fetching data:", error);
       }
     };
 
     fetchData();
-  }, [token]);
+  }, [token]); // useEffect sẽ chạy lại khi token thay đổi
+
+  // 2 useEffect dưới dùng để load 2 API thông tin các tỉnh và huyện ở nước ta
   useEffect(() => {
     const callAPI = async (api) => {
       try {
@@ -83,8 +87,6 @@ const FormAddAddress = () => {
       try {
         const getApi1 = await axios.get(api);
         setDistrict(getApi1?.data?.districts);
-
-        //renderData(response.data, "province");
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -151,7 +153,6 @@ const FormAddAddress = () => {
           <select
             {...register("city", { required: true, maxLength: 20 })}
             className="border-[2px] border-[#f0f0f0] border-solid w-[100%] px-2 py-1 outline-none mb-3"
-            placeholder="Tỉnh, thành phố"
             onChange={(e) => {
               setSelectedCity(e.target.value);
               setCity(e.target.options[e.target.selectedIndex].text);

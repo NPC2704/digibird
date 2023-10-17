@@ -6,21 +6,29 @@ import AddAddress from "../pages/AddAddress";
 import EditAddress from "../pages/EditAddress";
 import Login from "../pages/Login";
 const Routers = () => {
-  // const user = localStorage.getItem("token");
-
+  const user = localStorage.getItem("token");
+  // Tạo biến user để tiện kiểm tra cho việc đã login hay chưa, nếu đã login thì sẽ dẫn tới "/" là trang home,
+  //còn chưa login thì sẽ tự động tới "/login"
   return (
     <div className="container">
       <Routes>
-        <Route path="/*" element={<Home />} />
-        {/* <Route
-          exact
+        <Route exact path="/" element={<Home />} />
+        <Route
           path="/login"
-          element={user ? <Navigate to="/" /> : <Login />}
-        ></Route> */}
-        <Route path="/login" element={<Login />} />
-        <Route path="/address" element={<Address />} />
-        <Route path="/add-address" element={<AddAddress />} />
-        <Route path="/address/:addressId" element={<EditAddress />} />
+          element={!user ? <Login /> : <Navigate to="/" />}
+        />
+        <Route
+          path="/address"
+          element={user ? <Address /> : <Navigate to="/login" />}
+        />
+        <Route
+          path="/add-address"
+          element={user ? <AddAddress /> : <Navigate to="/login" />}
+        />
+        <Route
+          path="/address/:addressId"
+          element={user ? <EditAddress /> : <Navigate to="/login" />}
+        />
       </Routes>
     </div>
   );

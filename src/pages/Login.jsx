@@ -8,12 +8,7 @@ import API from "../services/API";
 // Import Recoil atom
 import { tokenState } from "../recoil/initState";
 const Login = () => {
-  const history = useNavigate();
-  // useEffect(() => {
-  //   const user = localStorage.getItem("token");
-
-  //   if (user != "") history("/");
-  // }, [history]);
+  const navigate = useNavigate();
   const [id, setID] = useState("");
   const [name, setName] = useState("");
   const [company_id, setCompanyId] = useState("");
@@ -35,10 +30,7 @@ const Login = () => {
       // Update Recoil atom with token
       setToken(token);
       const user = localStorage.getItem("token");
-
-      if (user != "") {
-        history("/");
-      }
+      navigate("/");
     } catch (error) {
       console.error("Login failed", error);
     }

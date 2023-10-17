@@ -3,12 +3,14 @@ import "../App.css";
 import "../assets/css/index.css";
 import { useEffect } from "react";
 function Home() {
+  // Đây cũng là một cách khác để kiểm tra việc login chưa, tại có 1 số kỹ thuật khác nên phải sử dụng cách này để kiểm tra
   const history = useNavigate();
-  //   useEffect(() => {
-  //     const user = localStorage.getItem("token");
+  useEffect(() => {
+    const user = localStorage.getItem("token");
 
-  //     if (user != "") history("/login");
-  //   }, [history]);
+    if (!user) history("/login");
+  }, [history]);
+
   const navigate = useNavigate();
   return (
     <div className="container-home">

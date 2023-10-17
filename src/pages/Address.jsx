@@ -1,6 +1,6 @@
+// Import các hàm và hook cần thiết từ thư viện React
 import React, { useEffect, useState } from "react";
 import { useRecoilValue } from "recoil";
-import FormListAddress from "../components/FormListAddress";
 import { api, setAuthToken } from "../utils/setAuthToken";
 import { tokenState } from "../recoil/initState";
 import API from "../services/API";
@@ -9,16 +9,11 @@ import { AiOutlineUser, AiOutlinePhone, AiOutlineMail } from "react-icons/ai";
 import { PiMapPinLight } from "react-icons/pi";
 import { Link } from "react-router-dom";
 import { Pagination } from "antd";
-import { useNavigate } from "react-router-dom";
 function Address() {
-  const history = useNavigate();
-  // useEffect(() => {
-  //   const user = localStorage.getItem("token");
-
-  //   if (user != "") history("/login");
-  // }, [history]);
+  // Đây là Page xem danh sách  Address
   const token = useRecoilValue(tokenState);
   const [dataListAddress, setDataListAddress] = useState([]);
+  // Các state để lưu trữ thông tin số trang
   const [totalPage, setTotalPage] = useState(0);
   const [currentPage, setCurrentPage] = useState(0);
   useEffect(() => {
@@ -49,7 +44,7 @@ function Address() {
     <div className="w-full flex justify-center items-center ">
       <div className="w-[90%]  mt-6 ">
         <ButtonAddAddress />
-
+        {/* map danh sách address được lấy từ API ở trên */}
         {dataListAddress.map((item, index) => (
           <div className="w-[100%]   border-[2px] border-[#f0f0f0] border-solid flex justify-center items-center mt-4">
             <div className="w-[92%] h-[85%]  py-5">
